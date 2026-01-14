@@ -1,4 +1,4 @@
-const departments = [
+export const departments = [
     {
         name: "Administration",
         employees: [
