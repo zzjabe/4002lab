@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <div>
-        <h1>ixell River Employee Directory</h1>
+        <h1>Pixell River Employee Directory</h1>
       </div>
     </>
   )
