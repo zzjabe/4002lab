@@ -1,49 +1,19 @@
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import Department from "./components/Department/Department";
-import { useState } from "react";
-import AddEmployeeForm from "./components/AddEmployeeForm/AddEmployeeForm";
-import initialDepartments from "./data/departments";
-import type{ Department as DeptType } from "./data/departments";
+import { Routes, Route } from "react-router-dom";
+import EmployeesPage from "./pages/EmployeesPage";
+import OrganizationPage from "./pages/OrganizationPage"
+import Layout from "./components/Layout/Layout";
 import './App.css'
 
 function App() {
-  const [departments, setDepartments] = useState<DeptType[]>(initialDepartments);
-
-  function addEmployee(deptName:string, firstName:string, lastName:string) {
-    setDepartments(prev =>
-      prev.map(dept =>
-        dept.name === deptName
-        ? {
-          ...dept,
-          employees: [...dept.employees, { firstName, lastName}],
-        }
-        :dept
-      )
-    );
-  }
-
   return (
-    <>
-      <Header />
-
-      <main>
-        <div className="departments-grid">
-          {departments.map((dept, index) => (
-            <Department key={index} dept={dept} />
-          ))}
-        </div>
-
-
-        <AddEmployeeForm
-          departments={departments}
-          onAddEmployee={addEmployee}
-        />
-      </main>
-
-      <Footer />
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<EmployeesPage />} />
+        <Route path="/employees" element={<EmployeesPage />} />
+        <Route path="/organization" element={<OrganizationPage />} />
+      </Route>
+    </Routes>
   )
 }
 
-export default App
+export default App;
