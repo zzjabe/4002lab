@@ -1,0 +1,36 @@
+.organization-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.org-table {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.org-header,
+.org-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 0.75rem 1rem;
+}
+
+.org-header {
+  background-color: #0d6efd;
+  color: white;
+  font-weight: 600;
+}
+
+.org-row:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.org-row:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.org-name {
+  font-weight: 500;
+}
