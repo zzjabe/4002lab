@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Department } from "../../data/departments";
-import "./AddEmployeeForm.css";
+import './AddEmployeeForm.css';
 
 type Props = {
   departments: Department[];
