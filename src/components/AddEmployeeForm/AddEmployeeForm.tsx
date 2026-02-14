@@ -1,78 +1,43 @@
-import { useState } from "react";
-import type { Department } from "../../data/departments";
+import { useFormInput } from "../../hooks/useFormInput";
 import "./AddEmployeeForm.css";
 
 type Props = {
-  departments: Department[];
-  onAddEmployee: (deptName: string, firstName: string, lastName: string) => void;
+  departments: any[];
+  onAddEmployee: (dept: string, first: string, last: string) => Promise<void>;
 };
 
 function AddEmployeeForm({ departments, onAddEmployee }: Props) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [deptName, setDeptName] = useState("");
-  const [error, setError] = useState("");
+  const firstName = useFormInput("");
+  const lastName = useFormInput("");
+  const deptName = useFormInput("");
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setError("");
+    try {
+      await onAddEmployee(deptName.value, firstName.value, lastName.value);
 
-    if (firstName.trim().length < 3) {
-      setError("First name must be at least 3 characters.");
-      return;
+      firstName.reset();
+      lastName.reset();
+      deptName.reset();
+    } catch (err: any) {
+      firstName.validate(() => err.message);
     }
-
-    if (!deptName) {
-      setError("Please select a department.");
-      return;
-    }
-
-    onAddEmployee(deptName, firstName, lastName);
-
-    setFirstName("");
-    setLastName("");
-    setDeptName("");
-  }
+  };
 
   return (
-    <form className="add-employee-form" onSubmit={handleSubmit}>
-      <h2>Add New Employee</h2>
+    <form onSubmit={handleSubmit}>
+      <input {...firstName} placeholder="First Name" />
+      {firstName.message && <p>{firstName.message}</p>}
 
-      {error && <div className="form-error">{error}</div>}
+      <input {...lastName} placeholder="Last Name" />
 
-      <div className="form-row">
-        <label>First Name</label>
-        <input
-          placeholder="Please enter your first name"
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
-        />
-      </div>
-
-      <div className="form-row">
-        <label>Last Name</label>
-        <input
-          placeholder="Please enter your last name"
-          value={lastName}
-          onChange={e => setLastName(e.target.value)}
-        />
-      </div>
-
-      <div className="form-row">
-        <label>Department</label>
-        <select
-          value={deptName}
-          onChange={e => setDeptName(e.target.value)}
-        >
-          <option value="">Select department</option>
-          {departments.map(dept => (
-            <option key={dept.name} value={dept.name}>
-              {dept.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      <select {...deptName}>
+        <option value="">Select</option>
+        {departments.map((d) => (
+          <option key={d.name}>{d.name}</option>
+        ))}
+      </select>
 
       <button type="submit">Add Employee</button>
     </form>

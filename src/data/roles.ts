@@ -1,7 +1,4 @@
-export type Role = {
-  name: string;
-  title: string;
-};
+import type { Role } from "../types/role";
 
 const roles: Role[] = [
   { title: "CEO / Chair of Board", name: "Jo-Anne Sinclair" },
@@ -11,16 +8,25 @@ const roles: Role[] = [
   { title: "CIO", name: "Josee Benjamin" },
 
   { title: "VP Sales & Marketing", name: "Vincent Grey" },
-  { title: "Director Financial and Audit Services", name: "Rupa Kharki (she/her/hers)" },
+  {
+    title: "Director Financial and Audit Services",
+    name: "Rupa Kharki (she/her/hers)",
+  },
   { title: "Director Human Resources", name: "Xun Kuang" },
-  { title: "Director Legal Services / General Counsel", name: "Stien Pedersen" },
+  {
+    title: "Director Legal Services / General Counsel",
+    name: "Stien Pedersen",
+  },
   { title: "Director Information Technology", name: "Sandra Bear" },
 
   { title: "Director Information Security and CISSO", name: "Gus Blue" },
   { title: "Director Accounting", name: "Sam Kong" },
   { title: "Director Physical Security", name: "Valentine Smith" },
   { title: "Director Facilities", name: "Mariya Kaperski" },
-  { title: "Manager, Business Continuity and Disaster Recovery", name: "Abd al-Hamid Alami" },
+  {
+    title: "Manager, Business Continuity and Disaster Recovery",
+    name: "Abd al-Hamid Alami",
+  },
 
   { title: "Manager, Internal Audit", name: "Victoria Gray" },
   { title: "Chief Architect", name: "Cheryl Guru" },
@@ -34,7 +40,10 @@ const roles: Role[] = [
   { title: "Manager, Purchasing", name: "Samir Hassan" },
   { title: "Manager, Communications", name: "Yuna Aikawa" },
 
-  { title: "Manager, Customer Experience and Community Engagement", name: "Jonathan Carberry" },
+  {
+    title: "Manager, Customer Experience and Community Engagement",
+    name: "Jonathan Carberry",
+  },
   { title: "Manager of Sales", name: "Roland Wei" },
   { title: "Manager, Marketing", name: "Pran Singh" },
   { title: "Business Analyst, Online Banking", name: "Linda Analyst" },
@@ -45,7 +54,7 @@ const roles: Role[] = [
   { title: "Manager IT End User Computing", name: "Haydar Katirci" },
   { title: "Manager IT Telecom and Infrastructure", name: "Jill Harkness" },
   { title: "Manager, Data Center and Hosting Services", name: "Tim Morrison" },
-  
+
   { title: "Manager of IT Risk Management", name: "Aleksandr Milosevic" },
   { title: "Manager IT, Project Management Office", name: "Jim Wingnut" },
 ];

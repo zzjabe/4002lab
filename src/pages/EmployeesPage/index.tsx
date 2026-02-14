@@ -1,43 +1,20 @@
-import { useState } from "react";
-import Department from "../../components/Department/Department";
+import { useEmployees } from "../../hooks/useEmployees";
 import AddEmployeeForm from "../../components/AddEmployeeForm/AddEmployeeForm";
-import initialDepartments from "../../data/departments";
-import type{ Department as DeptType } from "../../data/departments";
-import './index.css'
+import EmployeeList from "../../components/EmployeeList/EmployeeList";
+import "./index.css";
 
-function EmployeesPage() {
-  const [departments, setDepartments] = useState<DeptType[]>(initialDepartments);
-
-  function addEmployee(deptName:string, firstName:string, lastName:string) {
-    setDepartments(prev =>
-      prev.map(dept =>
-        dept.name === deptName
-        ? {
-          ...dept,
-          employees: [...dept.employees, { firstName, lastName}],
-        }
-        :dept
-      )
-    );
-  }
+function EmployeePage() {
+  const { departments, addEmployee, loading } = useEmployees();
 
   return (
-    <>
-      <main>
-        <div className="departments-grid">
-          {departments.map((dept, index) => (
-            <Department key={index} dept={dept} />
-          ))}
-        </div>
+    <main>
+      {loading && <p>Loading...</p>}
 
+      <AddEmployeeForm departments={departments} onAddEmployee={addEmployee} />
 
-        <AddEmployeeForm
-          departments={departments}
-          onAddEmployee={addEmployee}
-        />
-      </main>
-    </>
-  )
+      <EmployeeList departments={departments} />
+    </main>
+  );
 }
 
-export default EmployeesPage
+export default EmployeePage;
