@@ -2,12 +2,30 @@ import type { Role } from "../types/role";
 import roles from "../data/roles";
 
 const roleReop = {
-  getAll: async (): Promise<Role[]> => {
-    return Promise.resolve(roles);
+  getAll(): Role[] {
+    return roles;
   },
-  create: async (department: Role) => {
-    roles.push(department);
-    return Promise.resolve(roles);
+
+  add(role: Role): void {
+    roles.push(role);
+  },
+
+  delete(name: string): void {
+    const index = roles.findIndex((r) => r.name === name);
+    if (index !== -1) {
+      roles.splice(index, 1);
+    }
+  },
+
+  exists(name: string): boolean {
+    return roles.some((r) => r.name === name);
+  },
+
+  update(name: string, updated: Partial<Role>): void {
+    const role = roles.find((r) => r.name === name);
+    if (role) {
+      Object.assign(role, updated);
+    }
   },
 };
 

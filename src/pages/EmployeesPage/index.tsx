@@ -7,7 +7,7 @@ function EmployeePage() {
   const { departments, addEmployee, loading } = useEmployees();
 
   return (
-    <main>
+    <main className="employee-page">
       {loading && <p>Loading...</p>}
 
       <AddEmployeeForm departments={departments} onAddEmployee={addEmployee} />
