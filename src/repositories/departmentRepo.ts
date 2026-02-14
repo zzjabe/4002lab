@@ -1,14 +1,17 @@
 import departments from "../data/departments";
-import type { Department } from "../types/department";
 
-const employeeRepo = {
-  getAll: async (): Promise<Department[]> => {
-    return Promise.resolve(departments);
-  },
-  create: async (department: Department) => {
-    departments.push(department);
-    return Promise.resolve(departments);
+const departmentRepo = {
+  getAll: async () => Promise.resolve(departments),
+
+  addEmployee: async (deptName: string, employee: any) => {
+    const dept = departments.find((d) => d.name === deptName);
+
+    if (!dept) throw new Error("Department not found");
+
+    dept.employees.push(employee);
+
+    return Promise.resolve(dept.employees);
   },
 };
 
-export default employeeRepo;
+export default departmentRepo;
