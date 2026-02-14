@@ -1,2 +1,1 @@
-# Lab 1.2
-
+# Full Stack Lab

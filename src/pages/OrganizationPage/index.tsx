@@ -1,27 +1,26 @@
-import roles from "../../data/roles";
+import { useRoles } from "../../hooks/useRoles";
+import AddRoleForm from "../../components/AddRoleForm/AddRoleForm";
 import "./index.css";
 
-function Organization() {
-    return(
-        <>
-            <main className="organization-page">
+function RolePage() {
+  const { roles, addRole, deleteRole, loading } = useRoles();
 
-            <div className="org-table">
-                <div className="org-header">
-                <div>Name</div>
-                <div>Role</div>
-                </div>
+  return (
+    <main className="organization-page">
+      <AddRoleForm onAddRole={addRole} />
 
-                {roles.map((role, index) => (
-                <div className="org-row" key={index}>
-                    <div className="org-name">{role.name}</div>
-                    <div className="org-title">{role.title}</div>
-                </div>
-                ))}
-            </div>
-            </main>
-        </>      
-    )
+      {loading && <p>Loading...</p>}
+
+      <ul className="role-list">
+        {roles.map((role) => (
+          <li key={role.name}>
+            <strong>{role.name}</strong> - {role.title}
+            <button onClick={() => deleteRole(role.name)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
 }
 
-export default Organization;
+export default RolePage;
