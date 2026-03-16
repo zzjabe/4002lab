@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid";
+import { randomUUID } from "node:crypto";
 
 import * as departmentRepo from "../repositories/departmentRepository";
 
@@ -20,7 +20,7 @@ export const addDepartment = async (name: string): Promise<Department> => {
   }
 
   const department: Department = {
-    id: uuid(),
+    id: randomUUID(),
     name,
   };
 
