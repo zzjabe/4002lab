@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid";
+import { randomUUID } from "node:crypto";
 import * as repo from "../repositories/employeeRepository";
 import { Employee } from "../../../../../../shared/types/employee";
 
@@ -22,7 +22,7 @@ export const addEmployee = async (
   if (firstName.length < 2) throw new Error("First name too short");
 
   const employee: Employee = {
-    id: uuid(),
+    id: randomUUID(),
     departmentId,
     firstName,
     lastName,

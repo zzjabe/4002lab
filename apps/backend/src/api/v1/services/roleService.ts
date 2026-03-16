@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid";
+import { randomUUID } from "node:crypto";
 import * as repo from "../repositories/roleRepository";
 
 export const getAllRoles = async () => repo.getRoles();
@@ -9,7 +9,7 @@ export const addRole = async (title: string, name: string) => {
   }
 
   const role = {
-    id: uuid(),
+    id: randomUUID(),
     title,
     name,
   };
