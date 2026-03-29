@@ -1,46 +1,34 @@
-import { employees } from "../../../data/employees";
-import { departments } from "../../../data/departments";
+import { prisma } from "../db/prisma";
 import { Employee } from "../../../../../../shared/types/employee";
+import { Prisma } from "@prisma/client";
 
-export const getEmployees = async () => employees;
+export const getEmployees = async () => {
+  return prisma.employee.findMany({
+    include: { department: true },
+  });
+};
 
-export const getEmployeeById = async (id: string) =>
-  employees.find((e) => e.id === id);
+export const getEmployeeById = async (id: string) => {
+  return prisma.employee.findUnique({
+    where: { id },
+    include: { department: true },
+  });
+};
 
-export const createEmployee = async (employee: Employee) => {
-  employees.push(employee);
-  return employee;
+export const createEmployee = async (data: Prisma.EmployeeCreateInput) => {
+  return prisma.employee.create({ data });
 };
 
 export const updateEmployee = async (id: string, data: Partial<Employee>) => {
-  const emp = employees.find((e) => e.id === id);
-
-  if (!emp) return null;
-
-  Object.assign(emp, data);
-
-  return emp;
+  return prisma.employee.update({
+    where: { id },
+    data,
+  });
 };
 
 export const deleteEmployee = async (id: string) => {
-  const index = employees.findIndex((e) => e.id === id);
-
-  if (index === -1) return false;
-
-  employees.splice(index, 1);
-
-  return true;
-};
-
-export const attachDepartments = async (emps: Employee[]) => {
-  return emps.map((emp) => {
-    const dept = departments.find((d) => d.id === emp.departmentId);
-
-    return {
-      id: emp.id,
-      firstName: emp.firstName,
-      lastName: emp.lastName,
-      department: dept ?? null,
-    };
+  await prisma.employee.delete({
+    where: { id },
   });
+  return true;
 };

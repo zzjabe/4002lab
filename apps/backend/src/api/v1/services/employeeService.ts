@@ -1,17 +1,15 @@
-import { randomUUID } from "node:crypto";
 import * as repo from "../repositories/employeeRepository";
-import { Employee } from "../../../../../../shared/types/employee";
-
-export const getAllEmployees = async () => repo.getEmployees();
 
 export const getEmployees = async (include?: string) => {
-  const employees = await repo.getEmployees();
-
   if (include === "department") {
-    return repo.attachDepartments(employees);
+    return repo.getEmployees();
   }
 
-  return employees;
+  return repo.getEmployees();
+};
+
+export const getEmployeeById = async (id: string) => {
+  return repo.getEmployeeById(id);
 };
 
 export const addEmployee = async (
@@ -19,19 +17,34 @@ export const addEmployee = async (
   firstName: string,
   lastName: string,
 ) => {
-  if (firstName.length < 2) throw new Error("First name too short");
+  if (!firstName || firstName.length < 2) {
+    throw new Error("First name too short");
+  }
 
-  const employee: Employee = {
-    id: randomUUID(),
-    departmentId,
+  if (!lastName || lastName.length < 2) {
+    throw new Error("Last name too short");
+  }
+
+  return repo.createEmployee({
     firstName,
     lastName,
-  };
-
-  return repo.createEmployee(employee);
+    department: {
+      connect: { id: departmentId },
+    },
+  });
 };
 
-export const editEmployee = async (id: string, data: Partial<Employee>) =>
-  repo.updateEmployee(id, data);
+export const editEmployee = async (
+  id: string,
+  data: {
+    firstName?: string;
+    lastName?: string;
+    departmentId?: string;
+  },
+) => {
+  return repo.updateEmployee(id, data);
+};
 
-export const removeEmployee = async (id: string) => repo.deleteEmployee(id);
+export const removeEmployee = async (id: string) => {
+  return repo.deleteEmployee(id);
+};
