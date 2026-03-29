@@ -1,39 +1,29 @@
-import { randomUUID } from "node:crypto";
-
 import * as departmentRepo from "../repositories/departmentRepository";
 
-import type { Department } from "../../../../../../shared/types/department";
-
-export const getAllDepartments = async (): Promise<Department[]> => {
+export const getAllDepartments = async () => {
   return departmentRepo.getDepartments();
 };
 
-export const getDepartment = async (
-  id: string,
-): Promise<Department | undefined> => {
+export const getDepartment = async (id: string) => {
   return departmentRepo.getDepartmentById(id);
 };
 
-export const addDepartment = async (name: string): Promise<Department> => {
+export const addDepartment = async (name: string) => {
   if (!name || name.trim().length < 2) {
     throw new Error("Department name must be at least 2 characters");
   }
 
-  const department: Department = {
-    id: randomUUID(),
-    name,
-  };
-
-  return departmentRepo.createDepartment(department);
+  return departmentRepo.createDepartment({ name });
 };
 
-export const editDepartment = async (
-  id: string,
-  name: string,
-): Promise<Department | null> => {
+export const editDepartment = async (id: string, name: string) => {
+  if (!name || name.trim().length < 2) {
+    throw new Error("Department name too short");
+  }
+
   return departmentRepo.updateDepartment(id, name);
 };
 
-export const removeDepartment = async (id: string): Promise<boolean> => {
+export const removeDepartment = async (id: string) => {
   return departmentRepo.deleteDepartment(id);
 };

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "cors": "^2.8.6",
+    "serverless-http": "^4.0.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
@@ -17,7 +18,9 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev -w apps/frontend\" \"npm run dev -w apps/backend\""
+    "dev": "concurrently \"npm run dev -w apps/frontend\" \"npm run dev -w apps/backend\"",
+    "start:frontend": "npm run dev --workspace=apps/frontend",
+    "start:backend": "npm start --workspace=apps/backend"
   },
   "repository": {
     "type": "git",

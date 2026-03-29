@@ -1,42 +1,27 @@
-import { departments } from "../../../data/departments";
-import type { Department } from "../../../../../../shared/types/department";
+import { prisma } from "../db/prisma";
 
-export const getDepartments = async (): Promise<Department[]> => {
-  return departments;
+export const getDepartments = async () => {
+  return prisma.department.findMany();
 };
 
-export const getDepartmentById = async (
-  id: string,
-): Promise<Department | undefined> => {
-  return departments.find((d) => d.id === id);
+export const getDepartmentById = async (id: string) => {
+  return prisma.department.findUnique({
+    where: { id },
+  });
 };
 
-export const createDepartment = async (
-  department: Department,
-): Promise<Department> => {
-  departments.push(department);
-  return department;
+export const createDepartment = async (data: { name: string }) => {
+  return prisma.department.create({ data });
 };
 
-export const updateDepartment = async (
-  id: string,
-  name: string,
-): Promise<Department | null> => {
-  const dept = departments.find((d) => d.id === id);
-
-  if (!dept) return null;
-
-  dept.name = name;
-
-  return dept;
+export const updateDepartment = async (id: string, name: string) => {
+  return prisma.department.update({
+    where: { id },
+    data: { name },
+  });
 };
 
-export const deleteDepartment = async (id: string): Promise<boolean> => {
-  const index = departments.findIndex((d) => d.id === id);
-
-  if (index === -1) return false;
-
-  departments.splice(index, 1);
-
+export const deleteDepartment = async (id: string) => {
+  await prisma.department.delete({ where: { id } });
   return true;
 };
