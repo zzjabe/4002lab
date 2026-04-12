@@ -1,5 +1,6 @@
 import { useRoles } from "../../hooks/useRoles";
 import AddRoleForm from "../../components/AddRoleForm/AddRoleForm";
+import { Show, SignInButton } from "@clerk/react";
 
 function RolePage() {
   const { roles, addRole, deleteRole, loading } = useRoles();
@@ -7,10 +8,17 @@ function RolePage() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <>
-      <AddRoleForm onAddRole={addRole} />
-
-      <ul>
+    <div className="page-container">
+      <Show when="signed-in">
+        <AddRoleForm onAddRole={addRole} />
+      </Show>
+      <Show when="signed-out">
+        <div className="login-prompt">
+          <p>You must be logged in to create a role.</p>
+          <SignInButton />
+        </div>
+      </Show>
+      <ul className="role-list">
         {roles.map((role) => (
           <li key={role.id}>
             <strong>{role.title}</strong> — {role.name}
@@ -18,7 +26,7 @@ function RolePage() {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 

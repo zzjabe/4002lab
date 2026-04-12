@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import * as service from "../services/employeeService";
 import type { EmployeeWithDepartment } from "../../../../shared/types/employee";
+import { useAuth } from "@clerk/react";
 
 export const useEmployees = () => {
   const [employees, setEmployees] = useState<EmployeeWithDepartment[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const { getToken } = useAuth();
 
   const load = async () => {
     setLoading(true);
@@ -21,7 +24,13 @@ export const useEmployees = () => {
     firstName: string,
     lastName: string,
   ) => {
-    await service.addEmployee(departmentId, firstName, lastName);
+    const token = await getToken();
+
+    if (!token) {
+      throw new Error("User not authenticated");
+    }
+
+    await service.addEmployee(token, departmentId, firstName, lastName);
 
     await load();
   };
