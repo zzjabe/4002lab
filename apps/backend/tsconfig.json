@@ -14,8 +14,12 @@
     "strictFunctionTypes": true, // Ensure stricter checking of function types.
     "strictPropertyInitialization": true, // Ensure class properties are initialized.
     "noImplicitThis": true, // Raise error on 'this' expressions with an implied 'any' type.
-    "alwaysStrict": true // Ensure 'use strict' is always emitted.
+    "alwaysStrict": true, // Ensure 'use strict' is always emitted.
+    "rootDir": "../..",
+    "paths": {
+      "@shared/*": ["../../shared/*"]
+    }
   },
-  "include": ["src/**/*", "api/**/*", "prisma/**/*"],
+  "include": ["src/**/*", "api/**/*", "prisma/**/*", "../../shared/**/*"],
   "exclude": ["node_modules", "dist"] // Exclude 'node_modules' and 'dist' directories.
 }

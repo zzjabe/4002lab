@@ -6,13 +6,17 @@ export const getEmployees = async () => {
 };
 
 export const addEmployee = async (
+  token: string,
   departmentId: string,
   firstName: string,
   lastName: string,
 ) => {
   const res = await fetch(`${API}/employees`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ departmentId, firstName, lastName }),
   });
 

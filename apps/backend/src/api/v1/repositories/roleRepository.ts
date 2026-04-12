@@ -1,5 +1,4 @@
 import { prisma } from "../db/prisma";
-import { Role } from "../../../../../../shared/types/role";
 import { Prisma } from "@prisma/client";
 
 export const getRoles = async () => {

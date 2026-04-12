@@ -1,5 +1,5 @@
 import { prisma } from "../db/prisma";
-import { Employee } from "../../../../../../shared/types/employee";
+import { Employee } from "@shared/types/employee";
 import { Prisma } from "@prisma/client";
 
 export const getEmployees = async () => {
